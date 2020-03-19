@@ -8,7 +8,7 @@ namespace PlayBall.GroupManagement.Business.Services
 
         Group GetById(long id);
         Group Update(Group group);
-        Group Create(Group group);
+        Group Add(Group group);
     }
 
     

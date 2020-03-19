@@ -35,7 +35,7 @@ namespace PlayBall.GroupManagement.Business.Implement.Services
             return toUpdate;
         }
 
-        public Group Create(Group group)
+        public Group Add(Group group)
         {
             group.Id = ++_currentId;
             _groups.Add(group);

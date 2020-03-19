@@ -47,7 +47,7 @@ namespace PlayBall.GroupManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateGroup(GroupViewModel model)
         {
-            _groupService.Create(model.ToServiceModel());
+            _groupService.Add(model.ToServiceModel());
 
             return RedirectToAction("Index");
         }
