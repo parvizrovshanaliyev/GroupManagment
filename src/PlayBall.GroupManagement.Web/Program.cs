@@ -13,6 +13,8 @@ namespace PlayBall.GroupManagement.Web
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("#######starting app########");
+
             CreateHostBuilder(args).Build().Run();
         }
 

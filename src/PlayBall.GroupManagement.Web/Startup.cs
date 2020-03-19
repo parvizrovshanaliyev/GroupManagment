@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PlayBall.GroupManagement.Web.Demo;
 
 namespace PlayBall.GroupManagement.Web
 {
@@ -16,10 +13,18 @@ namespace PlayBall.GroupManagement.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            #region services
+            services.AddSingleton<IGroupGenerator, GroupGenerator>();
+            services.AddMvc(option => option.EnableEndpointRouting = false);
+            #endregion
+
+            #region core 3
+            //services.AddControllersWithViews();
+            #endregion
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -27,18 +32,42 @@ namespace PlayBall.GroupManagement.Web
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
+            app.UseStaticFiles();
 
-            app.UseEndpoints(endpoints =>
+            app.Use(async (context, next) =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Groups}/{action=Index}/{id?}");
-
-                endpoints.MapAreaControllerRoute(
-                    name: "dashboard", "Dashboard",
-                    pattern: "{area=Dashboard}/{controller=Home}/{action=Index}/{id?}");
+                context.Response.OnStarting(()=>
+                {
+                    context.Response.Headers.Add("X-Powered-By", "Asp Net Core : From 0 to Over Kill");
+                    return Task.CompletedTask;
+                });
+                await next.Invoke();
+                if (!context.Request.Path.Value.EndsWith("1"))
+                {
+                    await next.Invoke();
+                }
             });
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
+
+            #region core 3
+            //app.UseRouting();
+
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Groups}/{action=Index}/{id?}");
+
+            //    endpoints.MapAreaControllerRoute(
+            //        name: "dashboard", "Dashboard",
+            //        pattern: "{area=Dashboard}/{controller=Home}/{action=Index}/{id?}");
+            //});
+            #endregion
         }
     }
 }

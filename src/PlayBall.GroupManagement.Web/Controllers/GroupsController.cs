@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using PlayBall.GroupManagement.Web.Demo;
 using PlayBall.GroupManagement.Web.ViewModel;
 
 namespace PlayBall.GroupManagement.Web.Controllers
@@ -9,9 +10,18 @@ namespace PlayBall.GroupManagement.Web.Controllers
     [Route("groups")]
     public class GroupsController : Controller
     {
-        private static long _currentGroupId = 1;
+        #region fields
+        private readonly IGroupGenerator _groupGenerator;
         private static readonly List<GroupViewModel> Groups =
         new List<GroupViewModel> { new GroupViewModel { Id = 1, Name = "Sample Group" } };
+        #endregion
+        #region ctor
+
+        public GroupsController(IGroupGenerator groupGenerator)
+        {
+            _groupGenerator = groupGenerator;
+        }
+        #endregion
 
         [HttpGet]
         [Route("")] // not needed because Index  would be used as default anyway
@@ -33,7 +43,7 @@ namespace PlayBall.GroupManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult CreateGroup(GroupViewModel model)
         {
-            model.Id = ++_currentGroupId;
+            model.Id = _groupGenerator.Next();
             Groups.Add(model);
             return RedirectToAction("Index");
         }
