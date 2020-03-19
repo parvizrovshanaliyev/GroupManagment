@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PlayBall.GroupManagement.Web.Demo;
+using PlayBall.GroupManagement.Business.Implement.Services;
+using PlayBall.GroupManagement.Business.Services;
 
 namespace PlayBall.GroupManagement.Web
 {
@@ -14,8 +15,10 @@ namespace PlayBall.GroupManagement.Web
         public void ConfigureServices(IServiceCollection services)
         {
             #region services
-            services.AddSingleton<IGroupGenerator, GroupGenerator>();
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            //
+            services.AddMvc(option => option.EnableEndpointRouting = false); 
+            //
+            services.AddSingleton<IGroupService, InMemoryGroupService>();
             #endregion
 
             #region core 3
@@ -42,10 +45,7 @@ namespace PlayBall.GroupManagement.Web
                     return Task.CompletedTask;
                 });
                 await next.Invoke();
-                if (!context.Request.Path.Value.EndsWith("1"))
-                {
-                    await next.Invoke();
-                }
+                
             });
             app.UseMvc(routes =>
             {

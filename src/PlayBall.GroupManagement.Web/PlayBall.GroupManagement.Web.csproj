@@ -8,4 +8,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\PlayBall.GroupManagement.Business.Implement\PlayBall.GroupManagement.Business.Implement.csproj" />
+    <ProjectReference Include="..\..\PlayBall.GroupManagement.Business\PlayBall.GroupManagement.Business.csproj" />
+  </ItemGroup>
+
 </Project>
