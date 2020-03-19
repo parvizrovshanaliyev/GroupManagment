@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PlayBall.GroupManagement.Business.Implement.Services;
-using PlayBall.GroupManagement.Business.Services;
 
 namespace PlayBall.GroupManagement.Web
 {
@@ -18,7 +16,9 @@ namespace PlayBall.GroupManagement.Web
             //
             services.AddMvc(option => option.EnableEndpointRouting = false); 
             //
-            services.AddSingleton<IGroupService, InMemoryGroupService>();
+            // if using default DI container , uncomment
+            //services.AddBusiness();
+            //
             #endregion
 
             #region core 3
