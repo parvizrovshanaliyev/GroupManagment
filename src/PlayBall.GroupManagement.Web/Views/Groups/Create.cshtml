@@ -1,0 +1,11 @@
+﻿@model GroupViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form asp-controller="Groups" asp-action="CreateGroup" method="post">
+    <label asp-for="Name"></label>
+    <input type="text" asp-for="Name" />
+    <button type="submit">Save</button>
+</form>
+

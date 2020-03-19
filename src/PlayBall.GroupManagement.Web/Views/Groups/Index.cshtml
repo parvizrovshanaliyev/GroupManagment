@@ -1,0 +1,12 @@
+﻿@model IEnumerable<GroupViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<ul>
+    @foreach (var item in Model)
+    {
+    
+        <li>@item.Name  <a asp-controller="Groups" asp-action="Details"  asp-route-id="@item.Id"> Edit</a></li>
+    }
+</ul>
+<a asp-controller="Groups" asp-action="Create">Create</a>
