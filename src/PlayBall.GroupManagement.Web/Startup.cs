@@ -1,4 +1,7 @@
+using System;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,7 +13,7 @@ namespace PlayBall.GroupManagement.Web
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             #region services
             //
@@ -19,10 +22,18 @@ namespace PlayBall.GroupManagement.Web
             // if using default DI container , uncomment
             //services.AddBusiness();
             //
+            // Add AutoFac
+            var containerBuilder= new ContainerBuilder();
+            containerBuilder.RegisterModule<AutofacModule>();
+            containerBuilder.Populate(services);
+            var container = containerBuilder.Build();
+            return new AutofacServiceProvider(container);
             #endregion
 
             #region core 3
+
             //services.AddControllersWithViews();
+
             #endregion
         }
 
