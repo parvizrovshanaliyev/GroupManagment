@@ -4,7 +4,7 @@ using PlayBall.GroupManagement.Business.Services;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public class AutofacModule : Module
+    public class AutoFacModule : Module
 
     {
         protected override void Load(ContainerBuilder builder)

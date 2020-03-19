@@ -13,21 +13,18 @@ namespace PlayBall.GroupManagement.Web
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             #region services
             //
-            services.AddMvc(option => option.EnableEndpointRouting = false); 
+            services.AddMvc(option => option.EnableEndpointRouting = false);
             //
             // if using default DI container , uncomment
             //services.AddBusiness();
             //
-            // Add AutoFac
-            var containerBuilder= new ContainerBuilder();
-            containerBuilder.RegisterModule<AutofacModule>();
-            containerBuilder.Populate(services);
-            var container = containerBuilder.Build();
-            return new AutofacServiceProvider(container);
+            // Add services to the collection
+            services.AddOptions();
+
             #endregion
 
             #region core 3
@@ -37,7 +34,10 @@ namespace PlayBall.GroupManagement.Web
             #endregion
         }
 
-
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule(new AutoFacModule());
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -50,13 +50,13 @@ namespace PlayBall.GroupManagement.Web
 
             app.Use(async (context, next) =>
             {
-                context.Response.OnStarting(()=>
+                context.Response.OnStarting(() =>
                 {
                     context.Response.Headers.Add("X-Powered-By", "Asp Net Core : From 0 to Over Kill");
                     return Task.CompletedTask;
                 });
                 await next.Invoke();
-                
+
             });
             app.UseMvc(routes =>
             {
