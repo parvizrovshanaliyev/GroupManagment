@@ -16,14 +16,17 @@ namespace PlayBall.GroupManagement.Web.Controllers
         #region fields
         private readonly IGroupService _groupService;
         private readonly SomeRootConfiguration _configuration;
+        private readonly DemoSecretsConfiguration _secrets;
         #endregion
 
         #region ctor
         public GroupsController(IGroupService groupService ,
-            SomeRootConfiguration config)
+            SomeRootConfiguration config,
+            DemoSecretsConfiguration secrets)
         {
             _groupService = groupService;
             _configuration = config;
+            _secrets = secrets;
         }
         #endregion
 

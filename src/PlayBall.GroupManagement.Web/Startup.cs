@@ -35,6 +35,7 @@ namespace PlayBall.GroupManagement.Web
             //services.AddSingleton(_configuration.GetSection("SomeRoot").Get<SomeRootConfiguration>());
             // injecting POCO , prettier
             services.ConfigurePOCO<SomeRootConfiguration>(_configuration.GetSection("SomeRoot"));
+            services.ConfigurePOCO<DemoSecretsConfiguration>(_configuration.GetSection("DemoSecrets"));
             #endregion
             //
             // if using default DI container , uncomment
