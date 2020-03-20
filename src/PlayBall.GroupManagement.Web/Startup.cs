@@ -4,13 +4,21 @@ using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PlayBall.GroupManagement.Web.Demo;
 
 namespace PlayBall.GroupManagement.Web
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+           
+        }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
@@ -18,6 +26,16 @@ namespace PlayBall.GroupManagement.Web
             #region services
             //
             services.AddMvc(option => option.EnableEndpointRouting = false);
+            //
+            #region configure
+            // using IOptions
+            //services.Configure<SomeRootConfiguration>(_configuration.GetSection("SomeRoot"));
+            //
+            // injecting POCO
+            //services.AddSingleton(_configuration.GetSection("SomeRoot").Get<SomeRootConfiguration>());
+            // injecting POCO , prettier
+            services.ConfigurePOCO<SomeRootConfiguration>(_configuration.GetSection("SomeRoot"));
+            #endregion
             //
             // if using default DI container , uncomment
             //services.AddBusiness();

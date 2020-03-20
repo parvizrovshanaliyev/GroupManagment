@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using PlayBall.GroupManagement.Business.Services;
+using PlayBall.GroupManagement.Web.Demo;
 using PlayBall.GroupManagement.Web.Mappings;
 using PlayBall.GroupManagement.Web.ViewModel;
 
@@ -13,12 +15,15 @@ namespace PlayBall.GroupManagement.Web.Controllers
     {
         #region fields
         private readonly IGroupService _groupService;
+        private readonly SomeRootConfiguration _configuration;
         #endregion
 
         #region ctor
-        public GroupsController(IGroupService groupService)
+        public GroupsController(IGroupService groupService ,
+            SomeRootConfiguration config)
         {
             _groupService = groupService;
+            _configuration = config;
         }
         #endregion
 
