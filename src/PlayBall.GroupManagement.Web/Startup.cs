@@ -25,7 +25,7 @@ namespace PlayBall.GroupManagement.Web
         {
             #region services
             //
-            services.AddMvc(option => option.EnableEndpointRouting = false);
+            services.AddControllersWithViews();
             //
             #region configure
             // using IOptions
@@ -77,26 +77,27 @@ namespace PlayBall.GroupManagement.Web
                 await next.Invoke();
 
             });
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
-            });
 
-            #region core 3
-            //app.UseRouting();
 
-            //app.UseEndpoints(endpoints =>
+            #region routing
+            //app.UseMvc(routes =>
             //{
-            //    endpoints.MapControllerRoute(
+            //    routes.MapRoute(
             //        name: "default",
-            //        pattern: "{controller=Groups}/{action=Index}/{id?}");
-
-            //    endpoints.MapAreaControllerRoute(
-            //        name: "dashboard", "Dashboard",
-            //        pattern: "{area=Dashboard}/{controller=Home}/{action=Index}/{id?}");
+            //        template: "{controller}/{action=Index}/{id?}");
             //});
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                // attribute base routing 
+                //endpoints.MapControllers();
+                // convention-based routing 
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Groups}/{action=Index}/{id?}");
+
+            });
             #endregion
         }
     }
