@@ -53,7 +53,7 @@ namespace PlayBall.GroupManagement.Web.IoC
 
             public Group GetById(long id)
             {
-                _logger.LogTrace("######## Hello from {decoratedMethod} ######", nameof(GetById));
+                _logger.LogWarning("######## Hello from {decoratedMethod} ######", nameof(GetById));
 
                 return _inner.GetById(id);
             }
