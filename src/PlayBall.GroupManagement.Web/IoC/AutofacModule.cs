@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 new GroupServiceDecorator(service),"groupService" );
         }
 
+
         private class GroupServiceDecorator : IGroupService
         {
             private readonly IGroupService _inner;
