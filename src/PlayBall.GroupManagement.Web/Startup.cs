@@ -1,13 +1,12 @@
-using System;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PlayBall.GroupManagement.Web.Demo;
+using PlayBall.GroupManagement.Web.IoC;
 
 namespace PlayBall.GroupManagement.Web
 {
